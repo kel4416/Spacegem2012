@@ -1,0 +1,92 @@
+<div class='blackbox'></div>
+<div class='menubar'>
+    <div id='title'>
+        Space Gem
+    </div>
+    <div id='beta'>
+        BETA
+    </div>
+    <div class='buttons'>
+        <a class="white" href='{{logoutUrl}}'>LOGOUT</a>
+    </div>
+</div>
+
+
+<div class='blackbox'>
+    <div class='ranking'>
+        <a href="#/game" class="white close" href="" data-icon='D'></a>
+        <h4 class="center" data-icon="U"></h4>
+        <h1 class="center">You must be new around here.</h1>
+        <br/>
+        <h2 class="center">Now, pick your poison and join the party!</h2>
+
+        <div class="plusminus">
+            <a data-icon="&" onclick="increase()"></a>
+            <a data-icon="_" onclick="decrease()"></a>
+            <p class="inline">Fuel</p>
+            <p id="tb" class="inline">0</p>
+        </div>
+        <div class="plusminus">
+            <a data-icon="&" onclick="increase3()"></a>
+            <a data-icon="_" onclick="decrease3()"></a>
+            <p class="inline">Food</p>
+            <p class="inline" id="tb3">0</p>
+        </div>
+        <div class="plusminus">
+            <a data-icon="&" onclick="increase2()"></a>
+            <a data-icon="_" onclick="decrease2()"></a>
+            <p class="inline">Cargo</p>
+            <p class="inline" id="tb2">0</p>
+        </div>
+        <br/>
+        <h2 class="center">Points left: <span id="tb4">180</span></h2>
+        <br/>
+        <h4 class="center" data-icon="T" ng:click="process()"></h4>
+
+    </div>
+
+</div>
+
+<-div class='game'>
+    <div class='top'>
+        <div class='top left'>
+        </div>
+        <div class="top right">
+            <center>
+                <font color="#FFE87C" size="3">Customise your Game Stats</font></br>
+                <img src="img/add.png" onclick="increase()" />
+                <img src="img/minus.png" onclick="decrease()"/>
+                <div>
+                    <font color="#FFE87C">Fuel</font> <input type="text" size ="1" name="value" id="tb" value = "10">
+                </div>
+                 <div id='meter'>
+                <div id='progress'></div></div>
+            
+            
+                <img src="img/add.png" onclick="increase2()" />
+                <img src="img/minus.png" onclick="decrease2()"/>
+                <div>
+                    <font color="#FFE87C">Food</font><input type="text" size ="1" name="value2" id="tb2" value="10">
+                </div>
+                <div id='meter2'>
+                <div id='progress2'></div></div>
+            
+            
+                <img src="img/add.png" onclick="increase3()" />
+                <img src="img/minus.png" onclick="decrease3()"/>
+                <div>
+                    <font color="#FFE87C">Cargo</font><input type="text" size ="1" name="value3" id="tb3" value="10">
+                </div>
+                <div id='meter3'>
+                <div id='progress3'></div></div> </br>
+            
+                <font color=#FFE87C id="tb4">180</font><font color=#FFE87C>&nbsp Point Left!</font>
+
+                <input type="submit" name="submit" value="Submit" ng:click="process()"/>
+            
+            </center>
+        </div>
+    </div>
+</div>
+
+<ng:include src="'/app/partials/analytics.html'"></ng:include>

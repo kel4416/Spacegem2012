@@ -1,0 +1,166 @@
+<ng:include src="'/app/partials/menu.html'"></ng:include>
+<script src="http://widgets.fbshare.me/files/fbshare.js"></script>
+<div class='game'>
+    <div class='top'>
+        <button ng:hide="mode=='nomove'" ng:click='swap()' class='swap'>{{modeMsg}}</button>
+        <button ng:show="mode=='nomove'" ng:click="returntogame()" class='swap'>Return</button>
+        <div ng:show="mode=='nomove'" class='top full'>
+            <h4 data-icon='i'>You're out of moves!</h4>
+            <h3>Earn more moves or face suspension from the Galactic Trading Federation!</h3>
+            <br />
+            <br />
+            <br />
+            <div class='outofmoves'>
+                <div class="floatleft">
+                    <a class="center" href="" ng:click="share()">
+                        <h4 class="center white" data-icon='k'></h4>
+                        <h2 class="center white">Every share entitles you 3 moves!</h2>
+                    </a>
+                </div>
+                <div class="floatleft">
+                    <a class="center" href="" ng:click="quiz()">
+                        <h4 class="center white" data-icon='p'></h4>
+                        <h2 class="center white">Solve a question for 3 moves!</h2>
+                    </a>
+                </div>
+                <div class="floatleft">
+                    <a class="center" href='#/shop'>
+                        <h4 class="center white" data-icon='$'></h4>
+                        <h2 class="center white">Buy moves from the store!</h2>
+                    </a>
+                </div>
+            </div>
+
+        </div>
+        <div ng:show="mode=='trade'" class='top left'>
+            <h4 data-icon='s'></h4>
+
+            <p ng:hide="selectedPlayer.email!='NA'">Select a planet to get more details.</p>
+            <b><p ng:show="selectedPlayer.email!='NA'">{{selectedPlayer.email}}</p></b>
+
+            <p ng:show="selectedPlayer.email!='NA'"> Fuel: {{selectedPlayer.fuel}}</p>
+
+            <p ng:show="selectedPlayer.email!='NA'"> Cargo: {{selectedPlayer.cargo}}</p>
+
+            <p ng:show="selectedPlayer.email!='NA'"> Food: {{selectedPlayer.food}}</p>
+            <br/>
+
+            <div class="tradepanel" ng:show="tradeList.length>0">
+                <h4 data-icon='g' class="glowing"></h4>
+
+                <div class="tleft">
+                    <p>{{tradeList[tcounter].email}} would like to buy {{tradeList[tcounter].amount}} quantity of
+                        {{tradeList[tcounter].goods}} for G{{tradeList[tcounter].price}}.</p>
+                    <a href="" ng:click="trade('accepted')" class='icon black'> 3 </a>
+                    <a href="" ng:click="trade('rejected')" class='icon black'> * </a>
+                    <a href="" ng:show="tradeList.length>1" ng:click="trade('next')" class='icon black'> ] </a>
+                </div>
+            </div>
+        </div>
+        <div ng:show="mode=='trade'" class='top right'>
+            <h2>NEARBY TRADING PLANETS</h2>
+            <button class="planetbox" ng:click="select(player)" ng:repeat="player in players">
+                {{player}}
+                <p class='planet icon big'>G</p>
+            </button>
+        </div>
+        <div ng:show="mode=='game'" class='shroud2'></div>
+        <div ng:show="mode=='game'" class='top full'>
+            <h4 data-icon='p'> QUIZ</h4>
+            <h3>{{qn.questionDescr}}</h3>
+            <br />
+            <div ng:show="qn.questionType=='mcq'">
+            <table>
+                <tr ng:repeat="d in qn.qnParts">
+                    <td class='tight' ng:click='submit(d.num,"mcq")'>{{d.num}}</td>
+                    <td class='alignleft' ng:click='submit(d.num,"mcq")'>{{d.qn}}</td>
+                </tr>
+            </table>
+            </div>
+            <div ng:show="qn.questionType=='cross'">
+                CROSS
+            </div>
+            <h3 class='help' data-icon='?' ng:click='fbShare()'> Need a lifeline? Ask your friends for help! </h3>
+            <br />
+            <br />
+            <br />
+
+        </div>
+    </div>
+    <div class='bottom'>
+        <div class='leftpanel'>
+            <button id="produceButton" class="squarebutton" ng:click="produce('toggle')">Produce</button>
+            <button id="tradeButton" class="squarebutton" ng:click="trade('toggle')">Trade</button>
+        </div>
+        <div class='middlepanel'>
+            <div ng:show="ptoggle==true">
+                <button class="squarebutton" ng:click="produce(1)">Fuel</button>
+                <button class="squarebutton" ng:click="produce(2)">Cargo</button>
+                <button class="squarebutton" ng:click="produce(3)">Food</button>
+            </div>
+            <div id="produce" ng:show="ptoggle==true">
+                <h4 class="floatleft iconfix2" data-icon=','></h4>
+                <h3 >Production Efficiency</h3>
+                <h3>Fuel: 10%</h3>
+                <h3>Cargo: 10%</h3>
+                <h3>Food: 10%</h3>
+            </div>
+            <div id="trade" ng:show="ttoggle==true && selectedPlayer.email!='NA'">
+                <h3>Trade with {{selectedPlayer.email}}</h3>
+
+                <p>Choose a good to trade, enter the quantity and your offer.</p>
+                <label>Type </label>
+                <input type="radio" name="tradeFigures.goods" id="Fuel" value=1>
+                <label for="Fuel">Fuel</label>
+                <input type="radio" name="tradeFigures.goods" id="Cargo" value=2>
+                <label for="Cargo">Cargo</label>
+                <input type="radio" name="tradeFigures.goods" id="Food" value=3>
+                <label for="Food">Food</label><br/>
+                <label>Amount </label><input type="text" size="10" name="tradeFigures.amount"><br/>
+                <label>Offer </label><input type="text" size="10" name="tradeFigures.price"><br/>
+                <button ng:show="tradeFigures.amount!=0 && tradeFigures.price!=0" class="squarebutton"
+                        ng:click="trade('request')">Request
+                </button>
+            </div>
+            <div id="noPlayer" ng:show="selectedPlayer.email=='NA' && ttoggle==true">
+                <h3>You have not selected a player to trade with!</h3>
+            </div>
+        </div>
+        <div class="rightpanel black center">
+            <h4 data-icon='^'></h4>
+            <h2 class="black">HOME ECONOMY</h2>
+            <div>
+                <b><p>{{currentPlayer.email}}</p></b>
+                <p>G{{currentPlayer.gem}}, {{currentPlayer.move}} moves left.</p>
+                <p>Fuel: {{currentPlayer.fuel}}</p>
+                <p>Cargo: {{currentPlayer.cargo}}</p>
+                <p>Food: {{currentPlayer.food}}</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<ng:include src="'/app/partials/analytics.html'"></ng:include>
+
+<!-- Google Code for Create user account Conversion Page -->
+<!-- For Adwords to see which user actually sign in and create user after visiting -->
+<script type="text/javascript">
+    /* <![CDATA[ */
+    var google_conversion_id = 1002647178;
+    var google_conversion_language = "en";
+    var google_conversion_format = "3";
+    var google_conversion_color = "ffffff";
+    var google_conversion_label = "tdsnCM63kQMQit2M3gM";
+    var google_conversion_value = 0;
+    if (5) {
+        google_conversion_value = 5;
+    }
+    /* ]]> */
+</script>
+<script type="text/javascript" src="http://www.googleadservices.com/pagead/conversion.js">
+</script>
+<noscript>
+    <div style="display:inline;">
+        <img height="1" width="1" style="border-style:none;" alt="" src="http://www.googleadservices.com/pagead/conversion/1002647178/?value=5&amp;label=tdsnCM63kQMQit2M3gM&amp;guid=ON&amp;script=0"/>
+    </div>
+</noscript>

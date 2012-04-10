@@ -1,0 +1,64 @@
+<!doctype html>
+<html xmlns:ng="http://angularjs.org" xmlns:fb="http://ogp.me/ns/fb#">
+<head>
+    <link rel="stylesheet" type="text/css" href="css/styles.css" />
+    <link rel="stylesheet" type="text/css" href="css/gameStyles.css" />
+    <link rel="stylesheet" href="./puzzle/css/base.css" type="text/css">
+    <script src="lib/angular/angular.js" ng:autobind></script>
+    <script type="text/javascript" src="puzzle/js/oyPrologue.js"></script>
+    <script type="text/javascript" src="puzzle/js/oyJsrAjax.js"></script>
+    <script type="text/javascript" src="puzzle/js/oyClue.js"></script>
+    <script type="text/javascript" src="puzzle/js/oyMenu.js"></script>
+    <script type="text/javascript" src="puzzle/js/oyPuzzle.js"></script>
+    <script type="text/javascript" src="puzzle/js/oyServer.js"></script>
+    <script type="text/javascript" src="puzzle/js/oySign.js"></script>
+    <script type="text/javascript" src="puzzle/js/oyMisc.js"></script>
+    <script src="js/controllers.js"></script>
+    <script src="js/controllersGame.js"></script>
+    <script src="js/controllersArcade.js"></script>
+    <script src="js/services.js"></script>
+    <script src="js/filters.js"></script>
+    <script type="text/javascript" src="js/incrementing.js"></script>
+    <script type="text/javascript" src="https://www.google.com/jsapi" > </script>
+
+    <script type ="text/javascript">
+        google.load("jquery","1");
+
+    </script>
+    <script type="text/javascript">
+
+        var _gaq = _gaq || [];
+        _gaq.push(['_setAccount', 'UA-30241778-1']);
+        //_gaq.push(['_trackPageview']);
+
+        (function() {
+            var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+            ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+            var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+        })();
+
+    </script>
+
+    <script type="text/javascript" charset="utf-8">
+        var is_ssl = ("https:" == document.location.protocol);
+        var asset_host = is_ssl ? "https://d3rdqalhjaisuu.cloudfront.net/" : "http://d3rdqalhjaisuu.cloudfront.net/";
+        document.write(unescape("%3Cscript src='" + asset_host + "javascripts/feedback-v2.js' type='text/javascript'%3E%3C/script%3E"));
+    </script>
+
+    <script type="text/javascript" charset="utf-8">
+        var feedback_widget_options = {};
+
+        feedback_widget_options.display = "overlay";
+        feedback_widget_options.company = "spacegem2012";
+        feedback_widget_options.placement = "left";
+        feedback_widget_options.color = "#222";
+        feedback_widget_options.style = "idea";
+
+        var feedback_widget = new GSFN.feedback_widget(feedback_widget_options);
+    </script>
+
+</head>
+<body ng:controller="SpaceGemCtrl">
+<ng:view></ng:view>
+</body>
+</html>

@@ -1,0 +1,50 @@
+<ng:include src="'/app/partials/menu.html'"></ng:include>
+
+<div class="blackbox">
+    <div class='payment'>
+        <a href="#/game" class="white close3" href="" data-icon='D'></a>
+        <h4 class="center white" data-icon='$'></h4>
+        <h1 class="center">Need the extra edge? Get it here!</h1>
+        <h2 class="center">Select your package below and checkout!</h2>
+        <br />
+        <table>
+            <tr>
+                <th>Package</th>
+                <th>Price</th>
+            </tr>
+            <tr id="5moves" ng:click="style1={'background-color':'red'}; style2={}; select=1" ng:style='style1'>
+                <td>5 moves</td>
+                <td>$1</td>
+            </tr>
+            <tr id="30moves" ng:click="style2={'background-color':'red'}; style1={}; select=2" ng:style='style2'>
+                <td>30 moves</td>
+                <td>$4.50</td>
+            </tr>
+        </table>
+        <h5 id="checkout" ng:show='wait!=1' class="center" ng:click="setPayment()" data-icon='X'>Checkout</h5>
+        <h5 ng:show='wait==1' class="center glowing" data-icon='X'>Loading</h5>
+        <br />
+        <h4 class='center' data-icon='x'></h4>
+        <h3 class='center'>*This is a sandbox payment for testing purposes only.</h3>
+        <h3 class='center'>Please login with our testing account.</h3>
+        <h3 class='center'>Username: peterc_1333912013_per@gmail.com</h3>
+        <h3 class='center'>Password: spacegem2012</h3>
+    </div>
+</div>
+
+<ng:include src="'/app/partials/analytics.html'"></ng:include>
+
+<!--script type="text/javascript">
+    function setPayment() {
+        orderQty = $("#orderQty").val()
+        orderCost = 1
+        if(orderQty == 50){
+            orderCost = 4.50
+        }
+        $.post("/payment",{"quantity":orderQty, "cost":orderCost}, function(data) {
+            token1 = data.token;
+            window.location = "https://www.sandbox.paypal.com/cgi-bin/webscr?cmd=_express-checkout&token=" + token1;
+        }, "json");
+        $('#payment').fadeOut(1000);
+    }
+</script-->

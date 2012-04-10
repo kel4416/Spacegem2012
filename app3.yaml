@@ -1,0 +1,60 @@
+application: spacegem2012
+version: 3
+runtime: python27
+api_version: 1
+threadsafe: true
+
+handlers:
+- url: /test.*
+  script: gaeunit.application
+
+- url: /ini
+  script: ini.app
+
+- url: /
+  script: main.app
+
+- url: /login(\/?.*?)
+  script: login.app
+
+- url: /payment(\/?.*?)
+  script: payment.app
+  
+- url: /process.*?
+  script: process.app
+
+- url: /ranking.*?
+  script: ranking.app
+
+- url: /question.*?
+  script: qnvalidation.app
+
+- url: /staticqn
+  script: qnvalidation.app
+
+- url: /player/get
+  script: player.app
+
+- url: /player/set
+  script: player.app
+
+- url: /trade/request
+  script: trade.app
+
+- url: /trade/reply
+  script: trade.app
+
+- url: /trade/list
+  script: trade.app
+
+- url: /app/(.*)
+  static_files: app/\1
+  upload: app/(.*)
+
+- url: /coverage.*
+  login: admin
+  script: gaeunit-coverage.application
+
+libraries:
+- name: django
+  version: latest

@@ -1,0 +1,51 @@
+application: spacegem2012
+version: 5
+runtime: python
+api_version: 1
+
+handlers:
+- url: /test.*
+  script: gaeunit-coverage.py
+
+- url: /ini
+  script: ini.py
+
+- url: /
+  script: main.py
+
+- url: /login(\/?.*?)
+  script: login.py
+
+- url: /payment(\/?.*?)
+  script: payment.py
+
+- url: /process.*?
+  script: process.py
+
+- url: /ranking.*?
+  script: ranking.py
+
+- url: /question.*?
+  script: qnvalidation.py
+
+- url: /player/get
+  script: player.py
+
+- url: /player/set
+  script: player.py
+
+- url: /trade/request
+  script: trade.py
+
+- url: /trade/reply
+  script: trade.py
+
+- url: /trade/list
+  script: trade.py
+
+- url: /app/(.*)
+  static_files: app/\1
+  upload: app/(.*)
+
+- url: /coverage.*
+  script: gaeunit-coverage.py

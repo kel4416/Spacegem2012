@@ -1,0 +1,151 @@
+<ng:include src="'/app/partials/menu.html'"></ng:include>
+
+<div class='game'>
+    <div class='top'>
+        <div class='top left'>
+            <ul>
+                <li><a href="#/createqn"> Create New Question</a></li>
+                <li><a href="#/manageqn"> Manage Questions</a></li>
+                <li><a href="#/"> Back to Game</a></li>
+            </ul>
+        </div>
+        <div class='top right'>
+            <div align="center">
+                Question Type: <br/>
+                <input type='radio' ng:click='changeQn("mcq")' name='form.questionType' value='mcq' ng:required/>MCQ
+                <input type='radio' ng:click='changeQn("cross")' name='form.questionType' value='cross' ng:required/> Crossword
+                <input type='radio' ng:click='changeQn("drag")' name='form.questionType' value='drag' ng:required/>Drag and Drop
+                <br/>
+                <div id='createCrossQn' ng:show="form.questionType=='cross'">
+                <div><p>
+                    Question description:<br/>
+                    <input type='text' name='form.descr'ng:required/></p>
+                    Total Rows: <a href='' ng:click="changeAnsBox('row',false)"> < </a> {{ansBox.totalR}} <a href='' ng:click="changeAnsBox('row',true)"> > </a>
+                    Total Columns: <a href='' ng:click="changeAnsBox('col',false)"> < </a> {{ansBox.totalC}} <a href='' ng:click="changeAnsBox('col',true)"> > </a>
+                </div>
+                    <div id='createQn'>
+                        DOWN
+                        [<a href='' ng:click='addQuestion("D")'>AddQuestion</a>]
+                        <table align="center">
+                            <tr ng:repeat='qn in form.qnParts.$filter(helloD)'>
+                                <td>Crossword Question:<br/>
+                                <input type='text' name='qn.qn' value='qn.qn'/><br/></td>
+                                    <td> Ans:
+                                        <input type='text' size="2" name='form.answer[qn.num-1].ans' ng:change="changeAns(qn,'cross')" maxlength="{{ansBox.totalR-form.ansPos[$index].posR+1}}"/>
+                                    </td>
+                                <td>Row<a href="" ng:click="changePos(qn,'row', false,qn.num-1)"><</a>
+                                    {{form.ansPos[qn.num-1].posR}}
+                                    <a href="" ng:click="changePos(qn,'row', true,qn.num-1)">></a>
+                                    Col<a href="" ng:click="changePos(qn,'col',false,qn.num-1)"><</a>
+                                    {{form.ansPos[qn.num-1].posC}}
+                                    <a href="" ng:click="changePos(qn,'col', true,qn.num-1)">></a>
+                                </td>
+                                <td>[ <a href="" ng:click="remove(qn)">X</a> ]</td>
+                            </tr>
+                        </table>
+                        ACROSS
+                        [<a href='' ng:click='addQuestion("A")'>AddQuestion</a>]
+                        <table align="center">
+                            <tr ng:repeat='qn in form.qnParts.$filter(helloA)'>
+                                <td>Crossword Question:<br/>
+                                    <input type='text' name='qn.qn' value='qn.qn'/><br/></td>
+                                <td> Ans:
+                                    <input type='text' size="2" ng:change="changeAns(qn,'cross')" name='form.answer[qn.num-1].ans' maxlength="{{ansBox.totalC-form.ansPos[qn.num-1].posC+1}}" />
+                                </td>
+                                <td>Row<a href="" ng:click="changePos(qn,'row', false,qn.num-1)"><</a>
+                                    {{form.ansPos[qn.num-1].posR}}
+                                    <a href="" ng:click="changePos(qn,'row', true,qn.num-1)">></a>
+                                    Col<a href="" ng:click="changePos(qn,'col',false,qn.num-1)"><</a>
+                                    {{form.ansPos[qn.num-1].posC}}
+                                    <a href="" ng:click="changePos(qn,'col', true,qn.num-1)">></a>
+                                </td>
+                                <td>[ <a href="" ng:click="remove(qn)">X</a> ]</td>
+                            </tr>
+                        </table>
+                    </div>
+                    <input type='button' name='' value='preview' ng:click="previewAns()"/>
+                    <div id='previewCrossQn' class="blackbox" ng:show="preview==true">
+                        <a href="" class="white close2" href="" data-icon='D' ng:click="hideAns()"></a>
+                        <h4 class='center' data-icon='x'></h4>
+                        <div id="oygContext" align="center" style="width:100%;">
+                        <table class="oyOuterFrame" border="0" cellpadding="0" cellspacing="0">
+                            <tr><td align="center">
+                                <table class="oyFrame" border="0" cellpadding="0" cellspacing="0">
+                                    <tr>
+                                        <td colspan="5">
+                                            <table class="oyFrame" border="0" cellpadding="0" cellspacing="0" width="100%">
+                                                <tr class="oyHeader">
+                                                    <td class="oyHeader">
+                                                        <div id="oygHeader"></div>
+                                                    </td>
+                                                    <td align="right">
+                                                        <div id="oygHeaderMenu"></div>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                    </tr>
+                                    <tr style="height: 4px;">
+                                        <td colspan="5"></td>
+                                    </tr>
+                                    <tr>
+                                        <td rowspan="3" class="oyPuzzleCell" align="center" valign="top">
+                                            <div id="oygState"></div>
+                                            <div class="oyPuzzle" id="oygPuzzle"></div>
+                                            <div class="oyPuzzleFooter" id="oygPuzzleFooter"></div>
+                                        </td>
+                                        <td class="oyListCellDot">.</td>
+                                        <td class="oyListCell" valign="top" id="oygListH"></td>
+                                    </tr>
+                                    <tr style="height: 4px;">
+                                        <td colspan="4"></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="oyListCellDot">.</td>
+                                        <td class="oyListCell" valign="top" id="oygListV"></td>
+                                    </tr>
+                                    <tr style="height: 4px;">
+                                        <td colspan="5"></td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="5" class="oyFooter">
+                                            <div id="oygFooter"></div>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td></tr>
+                        </table>
+                        <div id="oygStatic" align="center" style="font-size: 10px; color: #4282B5; font-family: Arial;"></div>
+                    </div>
+                    </div>
+                </div>
+                <div id='createDragQn' ng:show="form.questionType=='drag'">
+                    Question description:<br/>
+                    <input type='text' name='form.descr' value='form.descr' ng:required/><br/>
+                </div>
+                <div id='createMCQQn' ng:show="form.questionType=='mcq'">
+                    Question description:<br/>
+                    <input type='text' name='form.descr'ng:required/><br/>
+                    <ul class="crossQnsCreate" align="center">
+                        <div ng:repeat='qn in form.qnParts'>
+                            <li><input type='text' ng:change="changeAns(qn,'mcq')" name="qn.qn"/></li>
+                        </div>
+                        <li>
+                            Ans: <select name='num' ng:change="correctMCQ(num)">
+                                <option>1</option>
+                                <option>2</option>
+                                <option>3</option>
+                                <option>4</option>
+                            </select>
+                        </li>
+                    </ul>
+                </div>
+                <button ng:click="cancel()" ng:disabled="{{master.$equals(form)}}">Cancel</button>
+                <button ng:click="save()" ng:disabled="{{master.$equals(form)}}">Save</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript" src="../app/puzzle/js/oyEpilogue.js" ng:autobind></script>
+
+<ng:include src="'/app/partials/analytics.html'"></ng:include>

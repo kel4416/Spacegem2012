@@ -1,0 +1,83 @@
+<ng:include src="'/app/partials/menu.html'"></ng:include>
+
+<div class="blackbox" ng:hide="warning==false">
+    <div class='construction'>
+        <a href="" class="white close2" href="" data-icon='D' ng:click="hideWarning()"></a>
+        <h4 class='center' data-icon='x'></h4>
+        <h1 class="center">Work in progress</h1>
+        <h1 class="center">Watch out for stray codes!</h1>
+    </div>
+</div>
+
+<div class='game'>
+    <div class='top'>
+        <div class='top left long'>
+            <ul>
+                <li><a href="#/question/createqn"> Create New Question</a></li>
+                <li><a href="#/question/manageqn"> Manage Questions</a></li>
+                <li><a href="#/question">Trying</a></li>
+                <li><a href="#/"> Back to Game</a></li>
+            </ul>
+        </div>
+        <div class='top right long' align="center">
+            <div id='qnList'>
+                <div>Manage Questions</div>
+                Search by:<br/> <input name="searchName"/><br/>
+                Sort by:<br/>
+                <select name="searchOption">
+                    <option value='questionDescr'>Description</option>
+                    <option value='questionType'>Type</option>
+                    <option value=''>Level</option>
+                </select>
+                <br/>
+                These are the questions you have created: <br/>
+                <ul class="qns">
+                    <table align="center">
+                        <tr>
+                            <th>ID</th>
+                            <th>Type</th>
+                            <th>Title</th>
+                            <th></th>
+                            <th></th>
+                        </tr>
+                        <tr ng:repeat='question in qns.$filter(searchName).$orderBy(searchOption)'>
+                            <td>{{$index+1}}</td>
+                            <td>{{question.questionType}}</td>
+                            <td>{{question.questionDescr}}</td>
+                            <input type="hidden" name="question.key" value="question.key"/>
+                            <td><a href="" ng:click="remove(question)" value="remove">remove</a></td>
+                            <td><a href="" ng:click="edit(question)" value="edit">edit</a></td>
+                        </tr>
+                    </table>
+                </ul>
+            </div>
+            <div id='edit' style="display: none">
+                Question Type: <br/>
+                <input type='radio' name='form.questionType' value='cross' ng:required/> Crossword
+                <input type='radio' name='form.questionType' value='drag' ng:required/>Drag and Drop
+                <input type='radio' name='form.questionType' value='mcq' ng:required/>MCQ
+                <br/>
+                Title:<br/>
+                <input type='text' name='form.title' value='{{form.title}}'ng:required/><br/>
+                Question description:<br/>
+                <input type='text' name='form.descr' value='{{form.descr}}' ng:required/><br/>
+                Answer for the question:
+                [<a href='' ng:click='addRow()'>AddRow</a>]
+                <table align="center">
+                    <tr ng:repeat='ans in form.answer'>
+                        {{ans.row}}
+                        <td>[<a href='' ng:click='addCol(ans.row)'>AddCol</a>]</td>
+                        <td ng:repeat='col in ans.column'>
+                            <input type='text' name="col.word"  size="1" maxlength="1"/>
+                        </td>
+                        <td>[ <a href="" ng:click="form.answer.$remove(ans)">X</a> ]</td>
+                    </tr>
+                </table>
+                <button ng:click="cancel()" ng:disabled="{{master.$equals(form)}}">Cancel</button>
+                <button ng:click="save()" ng:disabled="{{master.$equals(form)}}">Save</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<ng:include src="'/app/partials/analytics.html'"></ng:include>

@@ -1,0 +1,152 @@
+<div class='menubar'>
+    <div id='title'>
+        <a class="white">Space Gem</a>
+    </div>
+    <div id='beta'>
+        BETA
+    </div>
+    <div class='buttons'>
+        <a id="loginButton" class="white" href={{loginUrl}}>Already have an account?</a>
+    </div>
+</div>
+
+<div class='game'>
+    <div class='top'>
+        <div ng:hide="intro1!='5'" class='top left'>
+            <h4 data-icon='s'></h4>
+
+            <p ng:hide="selectedPlayer.email!='NA'">Select a planet to get more details.</p>
+            <b><p ng:show="selectedPlayer.email!='NA'">{{selectedPlayer.email}}</p></b>
+
+            <p ng:show="selectedPlayer.email!='NA'"> Fuel: {{selectedPlayer.fuel}}</p>
+
+            <p ng:show="selectedPlayer.email!='NA'"> Cargo: {{selectedPlayer.cargo}}</p>
+
+            <p ng:show="selectedPlayer.email!='NA'"> Food: {{selectedPlayer.food}}</p>
+            <br/>
+        </div>
+
+        <div ng:hide="intro1!='1'"  class='top left'>
+            <h4 data-icon='W'></h4>
+            <br />
+            <h2>Welcome to Space Gem.</h2>
+            <br />
+            <h2>First time here?</h2>
+            <br />
+            <h2>Follow the 3 easy steps to get right into the game!</h2>
+        </div>
+
+        <div ng:show="intro=='2'" class='top left'>
+            <h4 data-icon='W'></h4>
+            <h2>Every question you solve earns you 1 point!</h2>
+            <br />
+            <h2>Points are awesome. You make moves with them and do amazing things.</h2>
+            <br />
+            <h2>When you run out of points, just solve more questions!</h2>
+        </div>
+
+        <div ng:show="intro=='3'" class='top left'>
+            <h4 data-icon='W'></h4>
+            <h2>Now that you've earned some points, let's put them to good use.</h2>
+            <br />
+            <h2>To continue, simply produce 1 unit of each.</h2>
+        </div>
+
+        <div ng:show="intro=='4'" class='top left'>
+            <h4 data-icon='W'></h4>
+            <h2>It looks like Space Cowboy would like to trade with you!</h2>
+            <br />
+            <h2>Remember! Performing a trade consumes 2 points.</h2>
+            <div class="tradepanel">
+                <h4 data-icon='g' class="glowing"></h4>
+
+                <div class="tleft">
+                    <p>Space Cowboy would like to buy 1 quantity of
+                        Fuel for G20.</p>
+                    <a href="" ng:click="trade('accepted')" class='icon black'> 3 </a>
+                    <a href="" ng:click="trade('rejected')" class='icon black'> * </a>
+                </div>
+            </div>
+        </div>
+
+        <div ng:show="intro=='1'" class='top full'>
+            <h4 data-icon='i'></h4>
+            <h1>{{statusMsg}}</h1>
+            <h1 class="click" data-icon='{{status.first}}' ng:click="intro = link.one" ng:style="highlight.one"> 1. Get galactic points!</h1>
+            <h1 class="click" data-icon='{{status.second}}'ng:click="intro = link.two" ng:style="highlight.two"> 2. Spend them points!</h1>
+            <a ng:show="link.three=='go'" data-icon='{{status.third}}' ng:style="highlight.three" href="http://spacegem2012.appspot.com/app/index.html#/completequickstart"><h1> 3. Claim your land!</h1></a>
+            <h1 ng:show="link.three!='go'" data-icon='{{status.third}}' ng:style="highlight.three"> 3. Claim your land!</h1>
+            </button>
+        </div>
+        <div ng:show="intro=='2'" class='top right'>
+            <h4 data-icon='i'> Get points!</h4>
+            <div class=''><br/>
+                <h3>{{qn.questionDescr}}</h3>
+                <br />
+                <div ng:show="qn.questionType=='mcq'">
+                    <table>
+                        <tr ng:repeat="d in qn.qnParts">
+                            <td ng:click='submit(d.num,"mcq")'>{{d.num}}</td>
+                            <td class='alignleft' ng:click='submit(d.num,"mcq")'>{{d.qn}}</td>
+                        </tr>
+                    </table>
+                </div>
+                <div ng:show="qn.questionType=='cross'">
+                    CROSS
+                </div>
+            </div>
+            </button>
+        </div>
+        <div ng:show="intro=='3' || intro=='4'" class='top right'>
+            <h4 data-icon='i'> Spend points!</h4>
+            <div>
+                <h1 data-icon='{{statusProduce.first}}' ng:style="highlightProduce.one"> Produce 1 units of fuel.</h1>
+                <h1 data-icon='{{statusProduce.second}}' ng:style="highlightProduce.two"> Produce 1 units of cargo.</h1>
+                <h1 data-icon='{{statusProduce.third}}' ng:style="highlightProduce.three"> Produce 1 units of food.</h1>
+            </div>
+            </button>
+        </div>
+        </div>
+        <div ng:hide="intro1!='1'" class='top right'>
+            <h2>NEARBY TRADING PLANETS</h2>
+            <button class="planetbox" ng:click="select(player)" ng:repeat="player in players">
+                {{player}}
+                <p class='planet icon big'>G</p>
+            </button>
+        </div>
+    </div>
+    <div ng:show="intro=='1' || intro=='2'" class='shroud2'> </div>
+    <div class='bottom' ng:style="bottomcover">
+        <div class='leftpanel'>
+            <button class="squarebutton" ng:style="glowing" ng:click="produce('toggle')">Produce</button>
+            <button class="squarebutton" ng:click="">Trade</button>
+        </div>
+        <div class='middlepanel'>
+            <div ng:show="ptoggle==true">
+                <button class="squarebutton" ng:click="produce(1)">Fuel</button>
+                <button class="squarebutton" ng:click="produce(2)">Cargo</button>
+                <button class="squarebutton" ng:click="produce(3)">Food</button>
+            </div>
+            <div ng:show="intro=='3' || intro=='4'">
+                <h3>To produce, simply click on the Produce button on the left</h3>
+                <h3>Tips: Specialising in one produce will result in higher efficiency!</h3>
+            </div>
+            <div ng:show="selectedPlayer.email=='NA' && ttoggle==true">
+                <h3>You have not selected a player to trade with!</h3>
+            </div>
+        </div>
+        <div class="rightpanel black center">
+            <h4 data-icon='^'></h4>
+            <h2 class="black">HOME ECONOMY</h2>
+            <div>
+                <b><p>{{currentPlayer.email}}</p></b>
+                <p>G{{currentPlayer.gem}}, {{currentPlayer.move}} moves left.</p>
+                <p>Fuel: {{currentPlayer.fuel}}</p>
+                <p>Cargo: {{currentPlayer.cargo}}</p>
+                <p>Food: {{currentPlayer.food}}</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<ng:include src="'/app/partials/analytics.html'"></ng:include>
